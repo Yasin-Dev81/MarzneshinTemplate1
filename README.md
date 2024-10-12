@@ -68,7 +68,7 @@ nano /var/lib/marzneshin/templates/subscription/index.html
 ```
 https://t.me/yourID
 ```
-```
+
 برای تصویر پس زمینه این عبارتو سرچ کنید:
 ```
 background: url('https://4kwallpapers.com
