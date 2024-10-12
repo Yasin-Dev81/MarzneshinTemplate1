@@ -1,9 +1,9 @@
 <p align="center">
   <a href="https://github.com/x0sina/marzban-sub" target="_blank" rel="noopener noreferrer">
-    <img src="https://raw.githubusercontent.com/x0sina/marzban-sub/main/PreviewTemplate.png" title="Marzba-Sub"/>
+    <img src="https://raw.githubusercontent.com/x0sina/marzban-sub/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
   </a>
 </p>
-<h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/Gozargah/Marzban">مرزبان</a></h1>
+<h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/Gozargah/Marzban](https://github.com/marzneshin/marzneshin">مرزنشین</a></h1>
 
 ## فهرست مطالب
 - [ویژگی‌ ها](#ویژگی-ها)
@@ -24,23 +24,23 @@
 # مراحل نصب
 1. دانلود فایل template
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/subscription/  https://raw.githubusercontent.com/x0sina/marzban-sub/main/index.html
+sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubusercontent.com/MatinDehghanian/marzneshin-sub/refs/heads/main/index.html
 ```
 
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
 ```sh
-echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzban/templates/"' | sudo tee -a /opt/marzban/.env
-echo 'SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"' | sudo tee -a /opt/marzban/.env
+echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"' | sudo tee -a /opt/marzban/.env
+echo 'SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"' | sudo tee -a /etc/opt/marzneshin/.env
 ```
-یا مقادیر زیر رو در فایل `.env` در پوشه `/opt/marzban` با پاک کردن # اول آنها از حالت کامنت در بیارید.
+یا مقادیر زیر رو در فایل `.env` در پوشه `/opt/marzneshin` با پاک کردن # اول آنها از حالت کامنت در بیارید.
 ```sh
-CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzban/templates/"
+CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"
 SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"
 ```
 
-3. ری استارت مرزبان
+3. ری استارت مرزنشین
 ```sh
-marzban restart
+marzneshin restart
 ```
 
 
@@ -62,21 +62,18 @@ marzban restart
 برای شخصی سازی ایدی تلگرام, تصویر پس زمینه و لوگوی کاربر باید تغییراتی در فایل html لحاظ شود که با سرچ کردن برخی مقادیر امکان پذیره.
 برای سرچ کردن با استفاده از nano ابتدا فایل را با nano با دستور زیر باز کنید:
 ```
-nano /var/lib/marzban/templates/subscription/index.html
+nano /var/lib/marzneshin/templates/subscription/index.html
 ```
 سپس با دکمه های ترکیبی Ctrl + W سرچ بار رو باز کنید و برای عوض کردن ایدی پشتیبانی تلگرام عبارت زیر رو سرچ کنید:
 ```
 https://t.me/yourID
 ```
-برای لوگوی کاربر این عبارتو سرچ کنید:
-```
-images/marzban.svg
 ```
 برای تصویر پس زمینه این عبارتو سرچ کنید:
 ```
 background: url('https://4kwallpapers.com
 ```
-پس از اعمال تغییرات فایل رو سیو کنید و مرزبان رو ریستارت کنید.
+پس از اعمال تغییرات فایل رو سیو کنید و مرزنشین رو ریستارت کنید.
 
 ## نسخه هاست
 برای استفاده از نسخه هاست فولدر sub رو در هاست آپلود کنید و در فایل index.php مقدار BASE_URL را مانند مثال زیر به آدرس پنل خود تغییر دهید. یادتون باشه اگر برای دامنه پنلتون سرتیفیکیت ندارین کلمه اول رو http بزارید.
@@ -84,8 +81,6 @@ background: url('https://4kwallpapers.com
 const BASE_URL = "https://BaseUrl:PORT";
 ```
 
-## کپی رایت
-این قالب بر اساس طرح <a href="https://github.com/Gozargah/Marzban">Marzban Templates<a> ساخته شده.
 
 # Table of Contents
 - [Attributes](#Attributes)
@@ -106,23 +101,23 @@ A simple html template to better display user information
 # Installation Steps
 1. Download File Template
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/subscription/  https://raw.githubusercontent.com/x0sina/marzban-sub/main/index.html
+sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubusercontent.com/MatinDehghanian/marzneshin-sub/refs/heads/main/index.html
 ```
 
 2. Enter the following commands in your server's terminal:
 ```sh
-echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzban/templates/"' | sudo tee -a /opt/marzban/.env
-echo 'SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"' | sudo tee -a /opt/marzban/.env
+echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"' | sudo tee -a /opt/marzneshin/.env
+echo 'SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"' | sudo tee -a /etc/opt/marzneshin/.env
 ```
-Or uncomment the following values in `.env` file in `/opt/marzban` folder by removing # at the begining of them.
+Or uncomment the following values in `.env` file in `/opt/marzneshin` folder by removing # at the begining of them.
 ```sh
-CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzban/templates/"
+CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"
 SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"
 ```
 
-3. Restart Marzban
+3. Restart Marzneshin
 ```sh
-marzban restart
+marzneshin restart
 ```
 
 ## Update
@@ -143,21 +138,17 @@ In this example, the main language is English.
 To personalize the Telegram ID, background image and user logo, changes must be included in the html file, which is possible by searching for some values.
 To search using nano, first open the file with nano with the following command:
 ```
-nano /var/lib/marzban/templates/subscription/index.html
+nano /var/lib/marzneshin/templates/subscription/index.html
 ```
 Then open the search bar with Ctrl + W combination buttons and search for the following phrase to change Telegram support ID:
 ```
 https://t.me/yourID
 ```
-Search for the user's logo:
-```
-images/marzban.svg
-```
 Search for the background image:
 ```
 background: url('https://4kwallpapers.com
 ```
-After making changes, save the file and restart Marzban.
+After making changes, save the file and restart Marzneshin.
 
 ## Host Version
 To use the host version, upload the sub folder to the host and change the value of BASE_URL to your panel address in the index.php file just like the following example. Remember to write http if you don't have an SSL for your panel domain.
@@ -165,5 +156,3 @@ To use the host version, upload the sub folder to the host and change the value 
 const BASE_URL = "https://BaseUrl:PORT";
 ```
 
-## Copyright
-This template is based on <a href="https://github.com/Gozargah/Marzban">Marzban Templates<a> design.
