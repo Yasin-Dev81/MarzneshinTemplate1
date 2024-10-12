@@ -3,7 +3,7 @@
     <img src="https://raw.githubusercontent.com/x0sina/marzban-sub/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
   </a>
 </p>
-<h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/Gozargah/Marzban](https://github.com/marzneshin/marzneshin">مرزنشین</a></h1>
+<h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/Gozargah/Marzban">مرزنشین</a></h1>
 
 ## فهرست مطالب
 - [ویژگی‌ ها](#ویژگی-ها)
