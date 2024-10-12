@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/x0sina/marzban-sub" target="_blank" rel="noopener noreferrer">
-    <img src="https://raw.githubusercontent.com/x0sina/marzban-sub/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
+  <a href="https://github.com/MatinDehghanian/marzneshin-sub" target="_blank" rel="noopener noreferrer">
+    <img src="https://raw.githubusercontent.com/MatinDehghanian/marzneshin-sub/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
   </a>
 </p>
 <h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/marzneshin/marzneshin">مرزنشین</a></h1>
