@@ -6,8 +6,9 @@
     <title>{{ user.username }} - Sub Info</title>
     <style>
       .asli {
-        background: url("https://4kwallpapers.com/images/wallpapers/windows-server-2025-3840x2400-15386.jpg")
-          no-repeat center;
+        background: url("https://4kwallpapers.com/images/walls/thumbs_3t/11574.jpeg")
+          no-repeat;
+        background-position: center;
         background-size: cover;
       }
     </style>
@@ -3349,19 +3350,24 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
       rel="stylesheet"
       type="text/css"
     />
-
     <script src="https://cdn.jsdelivr.net/npm/alpinejs-i18n@2.4.0/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.8/dist/cdn.min.js"
       defer
+      src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"
     ></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
     <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
+    <link
+      href="https://fonts.cdnfonts.com/css/be-vietnam-pro"
+      rel="stylesheet"
+    />
     <script
       defer
       src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"
     ></script>
-
     <script defer>
       const sub = "{{ user.subscription_url }}";
       let fullUrl = `${window.location.origin}{{ user.subscription_url }}`;
@@ -3645,53 +3651,78 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
       }
 
       function renderConfigs() {
-        const subLinks = "{{ user.links }}";
-        const configsElement = document.querySelector("#configs_section");
-        const cleanedString = subLinks.replace(/[\[\]']/g, "");
+        const url = window.location.href.split("/info")[0];
+        // Fetch the encoded links from the provided URL
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `Network response was not ok: ${response.statusText}`
+              );
+            }
+            return response.text(); // Get the response as plain text (base64 string)
+          })
+          .then((encodedLinks) => {
+            const configsElement = document.querySelector("#configs_section");
 
-        // Split the cleaned string into an array using ', ' (comma and space) as the delimiter
-        const configArray = cleanedString.split(", ");
-        configArray.forEach((cfg, index) => {
-          configsElement.innerHTML += `
-            <div class="flex items-center bg-slate-900 px-4 py-2 rounded-lg">
-                                    <span class="flex-1">${extractNameFromConfigURL(
-                                      cfg
-                                    )}</span>
-                                    <div class="flex items-center justify-start gap-x-2">
-                                        <div class="w-10 h-10 overflow-hidden">
-                                            <button id="copyCfg-${index}" onclick="copyToClipboard(event,'${cfg}')" data-tooltip-target="copyLink" type="button" class="btnCopy">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" class="w-8 h-8 fill-white">
-  <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 009 4.5h6A1.5 1.5 0 0013.5 3h-3zm-2.693.178A3 3 0 0110.5 1.5h3a3 3 0 012.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 01-3 3H6.75a3 3 0 01-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15z" clip-rule="evenodd" />
-</svg>
+            // Decode base64 string into vmess link
+            const decodedLinks = decodeBase64(encodedLinks.trim());
 
-                                            </button>
-                                            <div x-text="$t('copyLink')" id="copyLink" role="tooltip"
-                                                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            // Split decoded links into individual vmess URLs
+            const configArray = decodedLinks
+              .split("\n")
+              .filter((link) => link.startsWith("vmess://")); // Ensure only valid links
 
-                                                <div class="tooltip-arrow" data-popper-arrow></div>
-                                            </div>
-                                        </div>
-                                        <div class="w-10 h-10 overflow-hidden">
+            // Clear previous content
+            configsElement.innerHTML = "";
 
-                                            <button onclick="openDynamicModal(extractNameFromConfigURL('${cfg}'), '${cfg}')" data-tooltip-target="qrCode" type="button" class="">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" class="w-8 h-8 fill-white">
-  <path fill-rule="evenodd" d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 9.375v-4.5zM4.875 4.5a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zM6 6.75A.75.75 0 016.75 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75A.75.75 0 016 7.5v-.75zm9.75 0A.75.75 0 0116.5 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 19.125v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875-.75a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM6 16.5a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm9.75 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm-3 3a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75z" clip-rule="evenodd" />
-</svg>
-
-                                            </button>
-                                            <div x-text="$t('qrCode')" id="qrCode" role="tooltip"
-                                                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-
-                                                <div class="tooltip-arrow" data-popper-arrow></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-            `;
-        });
+            configArray.forEach((cfg, index) => {
+              configsElement.innerHTML += `
+          <div class="flex items-center bg-slate-900 px-4 py-2 rounded-lg">
+            <span class="flex-1">${extractNameFromConfigURL(cfg)}</span>
+            <div class="flex items-center justify-start gap-x-2">
+              <div class="w-10 h-10 overflow-hidden">
+                <button id="copyCfg-${index}" onclick="copyToClipboard(event, '${cfg}')" data-tooltip-target="copyLink" type="button" class="btnCopy">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" class="w-8 h-8 fill-white">
+                    <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 009 4.5h6A1.5 1.5 0 0013.5 3h-3zm-2.693.178A3 3 0 0110.5 1.5h3a3 3 0 012.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 01-3 3H6.75a3 3 0 01-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <div x-text="$t('copyLink')" id="copyLink" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                  <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+              </div>
+              <div class="w-10 h-10 overflow-hidden">
+                <button onclick="openDynamicModal(extractNameFromConfigURL('${cfg}'), '${cfg}')" data-tooltip-target="qrCode" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" class="w-8 h-8 fill-white">
+                    <path fill-rule="evenodd" d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 9.375v-4.5zM4.875 4.5a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zM6 6.75A.75.75 0 016.75 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75A.75.75 0 016 7.5v-.75zm9.75 0A.75.75 0 0116.5 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 19.125v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875-.75a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM6 16.5a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm9.75 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm-3 3a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <div x-text="$t('qrCode')" id="qrCode" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                  <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching or processing the links:", error);
+          });
       }
 
+      // Function to decode base64 vmess links
+      function decodeBase64(encodedString) {
+        try {
+          const decodedString = atob(encodedString);
+          return decodedString;
+        } catch (error) {
+          console.error("Failed to decode base64:", error);
+          return "";
+        }
+      }
       Alpine.data("dataLimit", "0"); // Initialize Alpine data properties
       Alpine.data("dataUsed", "0");
 
@@ -3701,8 +3732,6 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
       const dataLimit =
         "{% if not user.data_limit %}∞{% else %}{{ user.data_limit }}{% endif %}";
       const dataUsed = "{{ user.used_traffic }}";
-      const expireDateInit =
-        "{% if not user.expire %}∞{% else %}{% set current_timestamp = now().timestamp() %}{{ user.expire | datetime }}{% endif %}";
       var tmpUsage = (
         (parseFloat(dataUsed) / parseFloat(dataLimit)) *
         100
@@ -3716,13 +3745,34 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
           ? "bg-yellow-600"
           : "bg-red-500";
       const resetInterval = "{{ user.data_limit_reset_strategy.value }}";
+      function convertToShamsi(expireDate) {
+        const dateObj = new Date(expireDate);
+        if (isNaN(dateObj.getTime())) {
+          console.error("Invalid date format:", expireDate);
+          return "Invalid date";
+        }
+        const hours = dateObj.getHours().toString().padStart(2, "0");
+        const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+        const shamsiDate = jalaali.toJalaali(
+          dateObj.getFullYear(),
+          dateObj.getMonth() + 1,
+          dateObj.getDate()
+        );
+        const formattedShamsiDate = `${shamsiDate.jy}/${shamsiDate.jm
+          .toString()
+          .padStart(2, "0")}/${shamsiDate.jd.toString().padStart(2, "0")}`;
+
+        return `${formattedShamsiDate} ${hours}:${minutes}`;
+      }
+      const expireDateInit =
+        "{% if not user.expire_date %}∞{% else %}{% set current_timestamp = now().timestamp() %}{{ user.expire_date | datetime }}{% endif %}";
+
       let expireDateVar = expireDateInit.includes("∞")
         ? "∞"
-        : localStorage.getItem("lang") == "fa"
-        ? new Date(expireDateInit)
-            .toLocaleString("fa-IR-u-nu-latn")
-            .replace(",", " ")
-        : expireDateInit;
+        : localStorage.getItem("lang") === "fa"
+        ? convertToShamsi(expireDateInit.replace(" ", "T"))
+        : new Date(expireDateInit).toLocaleString().replace(",", " ");
+
       let appsJson = {
         IOS: {
           Streisand: {
@@ -3776,7 +3826,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
               },
               {
                 name: "Github",
-                url: "https://github.com/2dust/v2rayNG/releases/download/1.8.17/v2rayNG_1.8.17.apk",
+                url: "https://github.com/2dust/v2rayNG/releases/download/1.8.5/v2rayNG_1.8.5.apk",
                 best: false,
               },
             ],
@@ -3786,12 +3836,12 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             url: [
               {
                 name: "Arm64",
-                url: "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.2.9/NB4A-1.2.9-arm64-v8a.apk",
+                url: "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.1.4/NB4A-1.1.4-arm64-v8a.apk",
                 best: false,
               },
               {
                 name: "Armeabi",
-                url: "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.2.9/NB4A-1.2.9-armeabi-v7a.apk",
+                url: "https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.1.4/NB4A-1.1.4-armeabi-v7a.apk",
                 best: false,
               },
             ],
@@ -3803,7 +3853,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             url: [
               {
                 name: "",
-                url: "https://github.com/MatsuriDayo/nekoray/releases/download/3.26/nekoray-3.26-2023-12-09-windows64.zip",
+                url: "https://github.com/MatsuriDayo/nekoray/releases/download/3.8/nekoray-3.8-2023-06-14-windows64.zip",
                 best: true,
               },
             ],
@@ -3813,7 +3863,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             url: [
               {
                 name: "",
-                url: "https://github.com/2dust/v2rayN/releases/download/6.33/zz_v2rayN-With-Core-SelfContained.7z",
+                url: "https://github.com/2dust/v2rayN/releases/download/6.27/zz_v2rayN-With-Core-SelfContained.7z",
                 best: false,
               },
             ],
@@ -4204,6 +4254,23 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         });
       });
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const expireDate = "{{ user.expire_date }}"; // Get the expire date from Jinja2
+        const now = new Date(); // Get the current date
+        const expireDateObj = new Date(expireDate); // Convert to Date object
+
+        // Calculate remaining days
+        const remainingTime = expireDateObj - now; // Difference in milliseconds
+        const remainingDays = Math.max(
+          0,
+          Math.floor(remainingTime / (1000 * 60 * 60 * 24))
+        ); // Convert to days
+
+        // Update the span with remaining days
+        document.getElementById("remaining-days").innerText = remainingDays;
+      });
+    </script>
   </head>
 
   <body class="font-body" x-data>
@@ -4252,9 +4319,23 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
               >
               <span
                 class="px-4 py-2 rounded-full inline-block shadow-md shadow-green-900 font-bold text-gray-200"
-                x-data="{status: '{{ user.status.value }}'}"
-                x-text="[status == 'active' ? $t('active') : status == 'limited' ? $t('limited') : status == 'expired' ? $t('expired') : $t('disabled')]"
-                :class="[status == 'active' ? 'bg-green-500' : status == 'limited' ? 'bg-red-600' : status == 'expired' ? 'bg-orange-600' : 'bg-gray-600']"
+                x-data="{ 
+                is_active: {% if user.is_active %}true{% else %}false{% endif %},
+                expired: {% if user.expired %}true{% else %}false{% endif %},
+                data_limit_reached: {% if user.data_limit_reached %}true{% else %}false{% endif %},
+                enabled: {% if user.enabled %}true{% else %}false{% endif %},
+                
+                // Define 'status' as a getter function
+                get status() {
+                  if (!this.enabled) return 'disabled';
+                  if (this.expired) return 'expired';
+                  if (this.data_limit_reached) return 'limited';
+                  if (this.is_active) return 'active';
+                  return 'unknown'; // fallback status
+                }
+              }"
+                x-text="status == 'active' ? $t('active') : status == 'limited' ? $t('limited') : status == 'expired' ? $t('expired') : $t('disabled')"
+                :class="status == 'active' ? 'bg-green-500' : status == 'limited' ? 'bg-red-600' : status == 'expired' ? 'bg-orange-600' : 'bg-gray-600'"
               ></span>
             </div>
             <div
@@ -4285,13 +4366,11 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   x-text="resetInterval == 'year' ? $t('resetIntervalYear') : resetInterval == 'month' ? $t('resetIntervalMonth') : resetInterval == 'week' ? $t('resetIntervalWeek') : resetInterval == 'day' ? $t('resetIntervalDay') : ''"
                 ></div>
                 <div class="dark:text-white text-black mt-5 text-center">
-                  <span class="font-bold" x-text="$t('remainingDays')"></span
-                  ><span
-                    >{% if not user.expire %}∞{% else %}{% set remaining_days =
-                    ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
-                    remaining_days | int if (remaining_days | int) > -1 else 0
-                    }}){% endif %}</span
-                  ><span x-text="$t('remainingDaysSufix')"></span>
+                  <span class="font-bold" x-text="$t('remainingDays')"></span>
+                  <span id="remaining-days">
+                    <!-- This will be updated by JavaScript -->
+                  </span>
+                  <span x-text="$t('remainingDaysSufix')"></span>
                 </div>
               </div>
             </div>
