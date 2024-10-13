@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://github.com/x0sina/marzban-sub" target="_blank" rel="noopener noreferrer">
-    <img src="https://raw.githubusercontent.com/x0sina/marzban-sub/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
+  <a href="https://github.com/MatinDehghanian/marzneshin-sub" target="_blank" rel="noopener noreferrer">
+    <img src="https://raw.githubusercontent.com/MatinDehghanian/marzneshin-sub/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
   </a>
 </p>
-<h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/Gozargah/Marzban](https://github.com/marzneshin/marzneshin">مرزنشین</a></h1>
+<h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/marzneshin/marzneshin">مرزنشین</a></h1>
 
 ## فهرست مطالب
 - [ویژگی‌ ها](#ویژگی-ها)
@@ -29,7 +29,7 @@ sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubu
 
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
 ```sh
-echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"' | sudo tee -a /opt/marzban/.env
+echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"' | sudo tee -a /etc/opt/marzneshin/.env
 echo 'SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"' | sudo tee -a /etc/opt/marzneshin/.env
 ```
 یا مقادیر زیر رو در فایل `.env` در پوشه `/opt/marzneshin` با پاک کردن # اول آنها از حالت کامنت در بیارید.
@@ -68,7 +68,7 @@ nano /var/lib/marzneshin/templates/subscription/index.html
 ```
 https://t.me/yourID
 ```
-```
+
 برای تصویر پس زمینه این عبارتو سرچ کنید:
 ```
 background: url('https://4kwallpapers.com
@@ -106,7 +106,7 @@ sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubu
 
 2. Enter the following commands in your server's terminal:
 ```sh
-echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"' | sudo tee -a /opt/marzneshin/.env
+echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"' | sudo tee -a /etc/opt/marzneshin/.env
 echo 'SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"' | sudo tee -a /etc/opt/marzneshin/.env
 ```
 Or uncomment the following values in `.env` file in `/opt/marzneshin` folder by removing # at the begining of them.
