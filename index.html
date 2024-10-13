@@ -3535,21 +3535,24 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         modal.click();
         // modal.checked = true;
       }
-
+      
       function extractNameFromConfigURL(url) {
         const namePattern = /#([^#]*)/;
         const match = url.match(namePattern);
 
-        if (match) {
-          const name = decodeURIComponent(match[1]);
-          return name;
-        } else if (url.startsWith("vmess://")) {
+        if (match) return decodeURIComponent(match[1]);
+
+        if (url.startsWith("vmess://")) {
           const encodedString = url.replace("vmess://", "");
           const decodedString = atob(encodedString);
-          return JSON.parse(decodedString).ps;
-        } else {
-          return null; // Return null if the pattern doesn't match
+          try {
+            return JSON.parse(decodedString).ps;
+          } catch (error) {
+            console.error("Invalid vmess URL format:", error);
+            return null;
+          }
         }
+        return null;
       }
 
       function detectOS() {
@@ -3671,7 +3674,6 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             // Split decoded links into individual vmess URLs
             const configArray = decodedLinks
               .split("\n")
-              .filter((link) => link.startsWith("vmess://")); // Ensure only valid links
 
             // Clear previous content
             configsElement.innerHTML = "";
