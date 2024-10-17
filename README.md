@@ -81,8 +81,13 @@ background: url('https://4kwallpapers.com
 const BASE_URL = "https://BaseUrl:PORT";
 ```
 
+
 ## حمایت و سفارش
 برای سفارش تمپلیت اختصاصی خودتون توی <a href="https://t.me/Mqtin">تلگرام</a> با من در ارتباط باشین.
+
+<a href="https://nowpayments.io/donation?api_key=Z50AKDD-DHSMN86-P0DQ22X-1SQAFCA" target="_blank" rel="noreferrer noopener">
+    <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
+</a>
 
 # Table of Contents
 - [Attributes](#Attributes)
@@ -157,4 +162,6 @@ To use the host version, upload the sub folder to the host and change the value 
 ```
 const BASE_URL = "https://BaseUrl:PORT";
 ```
-
+<a href="https://nowpayments.io/donation?api_key=Z50AKDD-DHSMN86-P0DQ22X-1SQAFCA" target="_blank" rel="noreferrer noopener">
+    <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
+</a>
