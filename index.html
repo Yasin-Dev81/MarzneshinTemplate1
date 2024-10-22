@@ -3535,7 +3535,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         modal.click();
         // modal.checked = true;
       }
-      
+
       function extractNameFromConfigURL(url) {
         const namePattern = /#([^#]*)/;
         const match = url.match(namePattern);
@@ -3672,8 +3672,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             const decodedLinks = decodeBase64(encodedLinks.trim());
 
             // Split decoded links into individual vmess URLs
-            const configArray = decodedLinks
-              .split("\n")
+            const configArray = decodedLinks.split("\n");
 
             // Clear previous content
             configsElement.innerHTML = "";
@@ -4221,34 +4220,68 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         var event = new Event("change");
         countriesSelect.dispatchEvent(event);
 
+        async function getConfigs() {
+          const url = window.location.href;
+          try {
+            // Fetch the encoded links from the provided URL
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error(
+                `Network response was not ok: ${response.statusText}`
+              );
+            }
+            const encodedLinks = await response.text(); // Get the response as plain text (base64 string)
+            const decodedLinks = decodeBase64(encodedLinks.trim());
+            const configArray = decodedLinks.split("\n");
+
+            return configArray; // Return the array of decoded links
+          } catch (error) {
+            console.error("Error fetching or processing the links:", error);
+            return [];
+          }
+        }
+
+        // Function to decode base64 vmess links
+        function decodeBase64(encodedString) {
+          try {
+            const decodedString = atob(encodedString);
+            return decodedString;
+          } catch (error) {
+            console.error("Failed to decode base64:", error);
+            return "";
+          }
+        }
+
+        // Function to copy text to clipboard
+        function copyToClipboard(event, text) {
+          const textarea = document.createElement("textarea");
+          textarea.value = text.join("\n"); // Join array of links into a single string
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+        }
+
         const copyButton = document.getElementById("copyBtn");
-        copyButton.addEventListener("click", function () {
+        copyButton.addEventListener("click", async function () {
           console.log("clicked");
-          // Text to copy
-          const subLinks = "{{ user.links }}";
 
-          const cleanedString = subLinks.replace(/[\[\]']/g, "");
-
-          // Split the cleaned string into an array using ', ' (comma and space) as the delimiter
-          const configArray = cleanedString.split(", ");
-
-          // Join the array elements into a single string with each configuration on a separate line
-          const result = configArray.join("\n");
+          // Fetch the configurations and copy them
+          const subLinks = await getConfigs(); // Wait for getConfigs to resolve
 
           const copyText = document.querySelector("#copyText");
 
-          copyToClipboard(null, result);
+          copyToClipboard(null, subLinks); // Copy the decoded links to the clipboard
 
           const defaultContent = copyText.innerHTML;
 
           copyText.innerHTML = `
-                    <div class="flex items-center justify-start gap-x-1">
-                        <lord-icon class="w-8 h-8" src="https://cdn.lordicon.com/jvihlqtw.json" trigger="loop"
-                                delay="1" colors="primary:#fff,secondary:#fff">
-                            </lord-icon>
-                            <span x-text="$t('copied')">/span>
-                        </div>
-                `;
+    <div class="flex items-center justify-start gap-x-1">
+      <lord-icon class="w-8 h-8" src="https://cdn.lordicon.com/jvihlqtw.json" trigger="loop"
+              delay="1" colors="primary:#fff,secondary:#fff"></lord-icon>
+      <span x-text="$t('copied')"></span>
+    </div>
+  `;
 
           setTimeout(function () {
             copyText.innerHTML = defaultContent;
@@ -7533,7 +7566,6 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                   <div class="overflow-hidden">
                     <div class="p-4 pb-6">
                       <div
-                        id="configs_section"
                         style="direction: ltr"
                         class="flex flex-col gap-y-2 pt-4"
                       >
@@ -7560,6 +7592,10 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                           >
                           </lord-icon>
                         </button>
+                        <div
+                          id="configs_section"
+                          class="flex flex-col gap-y-2"
+                        ></div>
                       </div>
                     </div>
                   </div>
