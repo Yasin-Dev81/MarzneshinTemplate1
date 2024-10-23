@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/MatinDehghanian/marzneshin-sub" target="_blank" rel="noopener noreferrer">
-    <img src="https://raw.githubusercontent.com/MatinDehghanian/marzneshin-sub/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
+  <a href="https://github.com/MatinDehghanian/MarzneshinTemplate1" target="_blank" rel="noopener noreferrer">
+    <img src="https://raw.githubusercontent.com/MatinDehghanian/MarzneshinTemplate1/main/PreviewTemplate.png" title="Marzneshin-Sub"/>
   </a>
 </p>
 <h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/marzneshin/marzneshin">مرزنشین</a></h1>
@@ -24,7 +24,7 @@
 # مراحل نصب
 1. دانلود فایل template
 ```sh
-sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubusercontent.com/MatinDehghanian/marzneshin-sub/refs/heads/main/index.html
+sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubusercontent.com/MatinDehghanian/MarzneshinTemplate1/refs/heads/main/index.html
 ```
 
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
@@ -108,7 +108,7 @@ A simple html template to better display user information
 # Installation Steps
 1. Download File Template
 ```sh
-sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubusercontent.com/MatinDehghanian/marzneshin-sub/refs/heads/main/index.html
+sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubusercontent.com/MatinDehghanian/MarzneshinTemplate1/refs/heads/main/index.html
 ```
 
 2. Enter the following commands in your server's terminal:
@@ -116,7 +116,7 @@ sudo wget -N -P /var/lib/marzneshin/templates/subscription/  https://raw.githubu
 echo 'CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"' | sudo tee -a /etc/opt/marzneshin/.env
 echo 'SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"' | sudo tee -a /etc/opt/marzneshin/.env
 ```
-Or uncomment the following values in `.env` file in `/opt/marzneshin` folder by removing # at the begining of them.
+Or uncomment the following values in `.env` file in `/etc/opt/marzneshin` folder by removing # at the begining of them.
 ```sh
 CUSTOM_TEMPLATES_DIRECTORY="/var/lib/marzneshin/templates/"
 SUBSCRIPTION_PAGE_TEMPLATE="subscription/index.html"
